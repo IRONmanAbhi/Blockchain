@@ -62,18 +62,12 @@ def mine():
     last_block = blockchain.last_block
     last_proof = last_block['proof']
     proof = blockchain.proof_of_work(last_proof)
-    # sender = 0  to represent the mining
-    blockchain.new_transaction(
-        sender='0',
-        recipient=node_identifier,
-        amount=1
-    )
     previous_hash = blockchain.hash(last_block)
     block = blockchain.new_block(previous_hash, proof)
     response = {
         'message' : "New block mined",
         'index' : block['index'],
-        'transactions' : block['transactions'],
+        'transactions' : block['transaction'],
         'proof' : block['proof'],
         'previous_hash' : block['previous_hash']
     }
@@ -102,4 +96,4 @@ def full_chain():
     return jsonify(response), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
